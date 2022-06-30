@@ -36,6 +36,9 @@ app.get("/second", function(req, res){  //localhost:3000/second 로 호출했을
     console.log("query : ", req.query)
     console.log("ID : ", req.query.ID)
     console.log("password : ", req.query.password)
+    // id : test, password : 1234 로그인 성공
+    // 로그인이 성공하면 Second Page 출력
+    // 로그인이 실패하면 Login fail 출력
     res.send("Second Page")
 })
 
