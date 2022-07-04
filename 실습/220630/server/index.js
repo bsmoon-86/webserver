@@ -10,6 +10,11 @@ app.set("views", __dirname+"/views");
 //html 엔진도 존재. 세팅하는 법 복잡. 그래서 ejs 대체 사용
 app.set("view engine", "ejs")
 
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
+
+
+
 //웹 서버가 시작 -> api를 생성
 //통신방식 get, post 지정
 
@@ -39,9 +44,18 @@ app.get("/second", function(req, res){  //localhost:3000/second 로 호출했을
     // id : test, password : 1234 로그인 성공
     // 로그인이 성공하면 Second Page 출력
     // 로그인이 실패하면 Login fail 출력
-    res.send("Second Page")
+    if(req.query.ID == "test" && req.query.password == "1234"){
+        res.send("Second Page")
+    }else{
+        res.send("Login fail")
+    }
 })
 
+app.post("/third", function(req, res){
+    console.log("body : ", req.body)
+    console.log("NAME : ", req.body.name)
+    res.send("Third Page")
+})
 
 
 

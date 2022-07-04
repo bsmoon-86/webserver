@@ -11,15 +11,16 @@
     <!-- index.js에서 만들어 논 /second url로 이동 -->
     <!-- <a href="/second">Second page</a>   -->
     <!-- 유저가 입력한 데이터를 서버에 보내주기위한 태그 <form> -->
-    <form action="/second" method="GET">
-        <!-- input 태그에서 입력한 값은 
-            input에 지정된 name의 값을 키값으로
-            입력한 값은 벨류의 값으로 서버에 보내준다. 
-            {ID : input에서 입력한 id값, 
-            password : password 입력한 값}
-        -->
+    <!-- <form action="/second" method="GET">
+
         <input type="text" name="ID">
         <input type="password" name="password">
+        <input type="submit">
+    </form> -->
+
+    <h1>post 접속</h1>
+    <form action="/third" method="post">
+        <input type="text" name="name">
         <input type="submit">
     </form>
 </body>
