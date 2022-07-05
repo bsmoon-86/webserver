@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>index page</h1>
+    <p>This is index</p>
+
+    <!-- a태그를 이용하여 하이퍼링크 생성
+    href 속성에 주소를 넣어준다.  -->
+    <a href="/signup">회원 가입</a>
+
+    <a href="/update">회원 정보 수정</a>
+
+    <a href="/delete">회원 탈퇴</a>
+
+    <!-- 유저가 입력한 데이터를 서버에 전송하기 위한 form 생성 -->
+    <!-- action속성에는 주소, method 속성에는 통신 방식(GET/POST) -->
+    <form action="/login" method="POST">
+        <!-- input에 입력한 데이터를 서버 전송
+        웹 데이터의 전송 시 데이터의 타입 json
+        json 데이터 형태 : {key: value, key2:value2,....} 
+        input 태그안에 name 속성의 값이 json 데이터에서 key 값
+        입력한 데이터가 json 데이터에서 value 값-->
+        <input type="text" name="id">
+        <input type="password" name="pass">
+        <input type="submit">
+        <!-- {id : 입력한 값1, pass : 입력한 값2} -->
+    </form>
+
+    <!-- localhost:3000/third 주소로 POST형식으로 데이터를 보내는 부분 -->
+    <form action="/third" method="POST">
+        <input type="text" name="user_name">
+        <input type="text" name="user_phone">
+        <input type="submit">
+        <!-- {user_name : value1, user_phone: value2} -->
+    </form>
+
+</body>
+</html>
