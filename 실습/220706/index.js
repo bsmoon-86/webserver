@@ -32,36 +32,16 @@ app.get("/", function(req, res){
     res.render("login.ejs")
 })
 
-// login.ejs에서 ID, Password 값을 보내줬을때 api인
-// post 형태의 /login api 생성
-app.post("/login", function(req, res){
-    //login.ejs 보내준 데이터를 변수 지정
-    //변수의 데이터들을 mysql user_info 테이블에 값이 존재하는지 확인
-    //값이 존재하면 로그인 성공
-    //값이 존재하지 않으면 로그인 실패
-    //{_id : value, _pass : value2}
-    var input_id = req.body._id
-    var input_pass = req.body._pass
-    console.log(input_id, input_pass)
-    //mysql 데이터와 조회
-    connection.query(
-        `select * from user_info where user_id = ? and user_pass = ?`,
-        [input_id, input_pass],
-        function(err, result){
-            if(err){
-                console.log(err)
-                res.send("SQL Error")
-            }else{
-                console.log(result)
-                if(result.length > 0){  //데이터가 존재하는 경우
-                    res.send("로그인 성공")
-                }else{
-                    res.send("로그인 실패")
-                }
-            }
-        }
-    )
+//route 작업
+//회원 관리에 대한 user.js 파일을 새로 만들어서 해당 api 이동
+// index.js에서 user.js파일 로드
 
+//routes 폴더에 안에 있는 user.js 파일을 불러온다.
+var user = require("./routes/user")
+//localhost:3000/login이라는 주소로 접속 시 user.js파일을 사용한다. 
+app.use("/login", user)
 
-
-})
+// 게시판의 기능은 board.js에 코드 작성
+// /board 라는 주소로 접속 시 board.js 사용
+var board = require("./routes/board")
+app.use("/board", board)

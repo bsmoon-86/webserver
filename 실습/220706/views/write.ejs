@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>글 쓰기</h1>
+    <form action="/board/writing" method="get">
+        <label>글 제목</label>
+        <input type="text" name="_title"><br>
+        <label>글 내용</label>
+        <textarea name="_contents"></textarea><br>
+        <label>작성자</label>
+        <input type="text" name = "_writer"><br>
+        <input type="submit" value="등록">
+    </form>
+</body>
+</html>
