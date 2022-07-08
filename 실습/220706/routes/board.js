@@ -58,5 +58,27 @@ router.get("/writing", function(req, res){
     )
 })
 
+// cannot GET /board/info
+// localhost:3000/board/info?_no=글번호
+router.get("/info", function(req, res){
+    //글번호 변수 지정
+    var no = req.query._no
+    console.log(no)
+    // 글번호를 받아온 뒤 해야되는 작업?
+    // DB 해당 글 번호의 정보를 로드 
+    connection.query(
+        `select * from board where No = ?`,
+        [no],
+        function(err, result){
+            if(err){
+                console.log(err)
+                res.send("SQL Error")
+            }else{
+                console.log(result)
+                res.render("info.ejs", {info : result})
+            }
+        }
+    )
+})
 
 module.exports = router
