@@ -81,4 +81,60 @@ router.get("/info", function(req, res){
     )
 })
 
+//게시글 삭제 api
+router.get("/delete", function(req, res){
+    var no = req.query._no  // 삭제를 할 글의 번호
+    //DB에서 해당하는 글 번호에맞는 데이터를 삭제
+    connection.query(
+        `delete from board where No = ?`,
+        [no],
+        function(err){
+            if(err){
+                console.log(err)
+                res.send("SQL Error")
+            }else{
+                res.redirect("/board")
+            }
+        }
+    )
+})
+
+//게시글 수정 페이지 api
+router.get("/update", function(req, res){
+    var no = req.query._no
+    var title = req.query._title
+    var contents = req.query._contents
+    var writer = req.query._writer
+
+    res.render("update.ejs", {
+            u_no : no,
+            u_title : title, 
+            u_contents : contents,
+            u_writer : writer
+        }
+    )
+})
+
+//게시글 수정
+router.post("/update2", function(req, res){
+    var no = req.body._no
+    var title = req.body._title
+    var contents = req.body._contents
+    var writer = req.body._writer
+
+    connection.query(
+        `update board set title = ?, contents = ?, writer = ? where No = ?`,
+        [title, contents, writer, no],
+        function(err){
+            if(err){
+                console.log(err)
+                res.send("SQL Error")
+            }else{
+                res.redirect("/board/info?_no="+no)
+            }
+        }
+    )
+
+})
+
 module.exports = router

@@ -5,6 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script>
+        function list(){
+            location.href = "/board"
+        }
+        function del(no){
+            location.href="/board/delete?_no="+no
+        }
+        function update(no, title, contents, writer){
+            location.href="/board/update?_no="+no+"&_title="+title+"&_contents="+contents+"&_writer="+writer
+        }
+    </script>
 </head>
 <body>
     <table border=1>
@@ -21,5 +32,19 @@
             <td><%=info[0].writer%></td>
         </tr>
     </table>
+    <!-- 목록 클릭 했을때 : /board 이동
+        삭제 클릭 했을때 : 글 번호를 가지고 오고, delete 명령어를 사용하여 데이터 삭제, 
+                          알람, 목록으로 이동 
+        1. 글번호를 가지고 api 호출(info.ejs)
+        2. api에서 글 번호를 확인해서 delete 명령어를 사용하여 데이터 삭제(board.js)
+        3. 삭제가 정상적으로 진행이 되었으면 목록(/board)으로 이동(board.js)
+    -->
+    <button onclick="list()">목록</button>
+    <button onclick="del('<%=info[0].No%>')">삭제</button>
+    <!-- 
+        수정 버튼 클릭 시 : 내용들을 수정할 수 있는 새로운 페이지
+        api 호출 -> 데이터(전체 내용)
+     -->
+    <button onclick="update('<%=info[0].No%>', '<%=info[0].title%>','<%=info[0].contents%>','<%=info[0].writer%>')">수정</button>
 </body>
 </html>
