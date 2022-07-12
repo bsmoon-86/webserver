@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 매개변수 no는 문서번호
+        // 매개변수 n은 갑인지 을인지 판단하는 파라미터
+        function sign(no, n){
+            location.href="/contract/sign?_no="+no+"&_n="+n
+        }
+    </script>
+</head>
+<body>
+    <!-- 계약서 상세 내용 출력
+        갑과 을 사인
+        갑이 사인을 하는 버튼
+        을이 사인을 하는 버튼 따로 구성
+        갑일때는 갑 버튼만
+        을일때는 을 버튼만
+    -->
+    <table>
+        <tr>
+            <th>문서 번호</th>
+            <td><%=content.No%></td>
+        </tr>
+        <tr>
+            <th>계약 내용</th>
+            <td><%=content.content%></td>
+        </tr>
+        <tr>
+            <th>갑</th>
+            <td><%=content.a_id%></td>
+        </tr>
+        <tr>
+            <th>을</th>
+            <td><%=content.b_id%></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <% if(login_id == content.a_id){%>
+                    <button onclick="sign('<%=content.No%>', 0)">갑 사인</button>
+                <%}else if(login_id == content.b_id){%>
+                    <button onclick="sign('<%=content.No%>', 1)">을 사인</button>
+                <%}%>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

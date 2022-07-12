@@ -5,9 +5,55 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script>
+        // 계약서 작성 페이지 이동 함수
+        function add(){
+            location.href="/contract/add"
+        }
+
+        // 계약서 상세 정보 보기 페이지로 이동
+        // 단일의 계약서의 정보를 확인
+        function info(no){
+            location.href = "/contract/info?_no="+no
+        }
+    </script>
 </head>
 <body>
     <h1>main page</h1>
+    <div>
+        
+        <!-- 버튼 생성 -->
+        <button onclick="add()">계약서 작성</button>
+    </div>
+    <div>
+        <!-- 계약서 리스트 -->
+        <table border="1">
+            <tr>
+                <th>문서 번호</th>
+                <th>갑</th>
+                <th>을</th>
+                <th>갑의 사인 유무</th>
+                <th>을의 사인 유무</th>
+            </tr>
+            <%if(contents.length ==0){%>
+                <tr>
+                    <td colspan="5">계약 리스트가 존재하지 않습니다.</td>
+                </tr>
+            <%} else {
+                for(var i = 0; i < contents.length; i++){%>
+                    <tr onclick="info('<%=contents[i].No%>')">
+                        <td><%=contents[i].No%></td>
+                        <td><%=contents[i].a_id%></td>
+                        <td><%=contents[i].b_id%></td>
+                        <td><%=contents[i].a%></td>
+                        <td><%=contents[i].b%></td>
+                    </tr>
+            <%  }
+            }%>
+        </table>
+    </div>
+
+
     <a href="/login/logout">로그 아웃</a>
 </body>
 </html>
