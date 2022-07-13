@@ -1,5 +1,7 @@
 var express = require("express")
 var router = express.Router()
+var Crypto = require("crypto")
+var secretkey = "jpifsdnjfnlsdnjdsf"
 
 //mysql 설정(데이터베이스에서 접속 설정)
 var mysql = require("mysql2")
@@ -30,10 +32,14 @@ router.get("/", function(req, res){
 router.post("/signin", function(req, res){
     var id = req.body._id
     var pass = req.body._pass
-    console.log(id, pass)   //데이터가 잘 들어왔는지 확인
+    // 암호화된 패스워드를 비교해서 로그인 성공 유무 판단
+    // pass를 암호화
+    // 쿼리문에서 암호화된 데이터를 삽입하여 데이터를 비교
+    var crypto = Crypto.createHmac('sha256', secretkey).update(pass).digest('hex')
+    console.log(id, crypto)   //데이터가 잘 들어왔는지 확인
     connection.query(
         `select * from user where ID = ? and password = ?`,
-        [id, pass],
+        [id, crypto],
         function(err, result){
             // result는 데이터타입 -> list
             // result [{},{},{}]
@@ -62,6 +68,10 @@ router.get("/signup", function(req, res){
 router.post("/signup2", function(req, res){
     var id = req.body._id
     var pass = req.body._pass
+
+    //SHA256이용하여 암호화
+    var crypto = Crypto.createHmac('sha256', secretkey).update(pass).digest('hex')
+    console.log(crypto)
     var name = req.body._name
     var birth = req.body._birth
     var phone = req.body._phone
@@ -79,7 +89,7 @@ router.post("/signup2", function(req, res){
                 if(result.length == 0){
                     connection.query(
                         `insert into user values (?,?,?,?,?)`,
-                        [id, pass, name, birth, phone],
+                        [id, crypto, name, birth, phone],
                         function(err2){
                             if(err2){
                                 console.log(err2)

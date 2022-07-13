@@ -66,6 +66,8 @@ app.use("/login", login)
 var sign = require("./routes/sign.js")
 app.use("/contract", sign)
 
+var smart = require("./routes/contract.js")
+app.use("/smart", smart)
 
 
 var port = 3000

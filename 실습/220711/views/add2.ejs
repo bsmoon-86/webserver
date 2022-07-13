@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>계약서 작성</h1>
+    <!-- 
+        문서번호, 계약서 내용, 을의 아이디
+
+        실제 데이터베이스에서 table 항목 
+        문서번호, 계약 내용, 갑의 아이디, 을의 아이디, 
+        작성 시간, 갑의 사인 유무, 을의 사인 유무
+     -->
+    <form action="/smart/add" method="post">
+        <table>
+            <tr>
+                <td>
+                    <label>문서번호</label>
+                </td>
+                <td>
+                    <input type="text" name="_no">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>계약 내용</label>
+                </td>
+                <td>
+                    <textarea name = "_content" style="width: 300px; height:300px;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="작성 완료">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
