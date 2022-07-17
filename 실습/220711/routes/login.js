@@ -1,16 +1,16 @@
 var express = require("express")
 var router = express.Router()
 var Crypto = require("crypto")
-var secretkey = "jpifsdnjfnlsdnjdsf"
+
 
 //mysql 설정(데이터베이스에서 접속 설정)
 var mysql = require("mysql2")
 var connection = mysql.createConnection({
-    host : 'localhost',
-    port : 3306, 
-    user : 'root', 
-    password : '1234', 
-    database : "blockchain"
+    host : process.env.host,
+    port : process.env.port, 
+    user : process.env.user, 
+    password : process.env.password, 
+    database : process.env.database
 })
 
 //api 구성
@@ -35,7 +35,7 @@ router.post("/signin", function(req, res){
     // 암호화된 패스워드를 비교해서 로그인 성공 유무 판단
     // pass를 암호화
     // 쿼리문에서 암호화된 데이터를 삽입하여 데이터를 비교
-    var crypto = Crypto.createHmac('sha256', secretkey).update(pass).digest('hex')
+    var crypto = Crypto.createHmac('sha256', process.env.secretkey).update(pass).digest('hex')
     console.log(id, crypto)   //데이터가 잘 들어왔는지 확인
     connection.query(
         `select * from user where ID = ? and password = ?`,
@@ -70,7 +70,7 @@ router.post("/signup2", function(req, res){
     var pass = req.body._pass
 
     //SHA256이용하여 암호화
-    var crypto = Crypto.createHmac('sha256', secretkey).update(pass).digest('hex')
+    var crypto = Crypto.createHmac('sha256', process.env.secretkey).update(pass).digest('hex')
     console.log(crypto)
     var name = req.body._name
     var birth = req.body._birth

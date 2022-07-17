@@ -1,6 +1,7 @@
 var express = require("express")
 var app = express()
 var session = require("express-session")
+require('dotenv').config()
 
 // post 통신 방식 데이터를 받기 위한 초기 설정
 app.use(express.json())
@@ -13,7 +14,7 @@ app.set("view engine", "ejs")
 //세션을 설정
 app.use(
     session({
-        secret : "nsajofnjasfos",
+        secret : process.env.session_secretkey,
         resave : false, 
         saveUninitialized: true
     })
