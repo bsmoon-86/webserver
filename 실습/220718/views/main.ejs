@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        function ajax(){
+            $.ajax({
+                url : "/ajax",
+                data : {
+                    _name : "test",
+                    _phone : "01012345678"
+                },
+                method : "GET",     //method : "POST"도 사용 가능
+                dataType : "json"
+            })
+            .done(function(result){   //통신이 정상적으로 완료되고 결과값을 리턴
+                $("p").text(result.a)
+            })
+            .fail(function(xhr, status, error){ //통신이 실패하는 경우
+                console.log(xhr)
+                console.log(status)
+                console.log(error)
+            })
+            .always(function(xhr, status){
+                alert(status)
+            })
+        }
+
+        function post(){
+            // $.get(url, data, function(result, status))
+            // $.post(url, data, function(result, status)) -> 결과값은 텍스트 받아오는 작업
+            $.post("/ajax_post",
+                {
+                    _name : "test",
+                    _phone : "010123456780"
+                },
+                function(result, status){
+                    alert(status)
+                    $("p").text(result.a)
+                }
+            )
+        }
+
+        function get_json(){
+            $.getJSON(
+                "/ajax_getjson", 
+                {
+                    _name : "test"
+                },
+                function(result, status){
+                    alert(status)
+                    $("p").text(result.a)
+                }
+            )
+        }
+    </script>
+</head>
+<body>
+    <p></p>
+    <button onclick="ajax()">click</button>
+    <button onclick="post()">post click</button>
+    <button onclick="get_json()">post json click</button>
+</body>
+</html>
