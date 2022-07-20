@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Blog Template · Bootstrap v5.0</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/blog/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/blog.css" rel="stylesheet">
+  </head>
+  <body>
+    <%- include("./menu.ejs") %>
+
+    <main class="container">
+      <!-- 메뉴바 밑의 검은 박스 -->
+      <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+          <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
+          <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
+          <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p>
+        </div>
+      </div>
+
+      <h3>Example table</h3>
+      <p>And don't forget about tables in these posts:</p>
+      <form action="/add_car2" method="post">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>차량 번호</td>
+              <td><input type="text" class='form-control' name='_num'></td>
+            </tr>
+            <tr>
+              <td>차량 연식</td>
+              <td><input type="text" class='form-control' name='_year'></td>
+            </tr>
+            <tr>
+              <td>차량 종류</td>
+              <td><input type="text" class='form-control' name='_type'></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center">
+          <button type="submit" class="w-100 btn btn-outline-primary">차량 등록</button>
+        </div>
+      </form>
+      
+
+      </div>
+
+
+    </main>
+
+    <footer class="blog-footer">
+      <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>
+
+  </body>
+</html>
