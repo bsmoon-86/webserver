@@ -55,27 +55,27 @@
         </div>
       </div>
 
-      <h3>Example table</h3>
+      <h3><%=list[0][1]%></h3>
       <p>And don't forget about tables in these posts:</p>
       <table class="table">
         <thead>
           <tr>
-            <th>차량번호</th>
-            <th>차량연식</th>
-            <th>차량종류</th>
+            <th>점검자</th>
+            <th>점검 결과</th>
+            <th>점검 시간</th>
           </tr>
         </thead>
         <tbody>
           <%if(list.length == 0){%>
             <tr>
-              <td colspan="3">등록된 차량이 없습니다.</td>
+              <td colspan="3">등록된 점검 결과가 없습니다.</td>
             </tr>
           <%}else{
               for(var i = 0; i < list.length; i++){%>
-                <tr onclick="check('<%=list[i].num%>')">
-                  <td><%=list[i].num%></td>
-                  <td><%=list[i].year%></td>
-                  <td><%=list[i].type%></td>
+                <tr>
+                  <td><%=list[i][0]%></td>
+                  <td><%=list[i][2]%></td>
+                  <td><%=list[i][3]%></td>
                 </tr>
           <%}}%>
         </tbody>

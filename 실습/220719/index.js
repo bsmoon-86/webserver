@@ -1,6 +1,7 @@
 var express = require("express")
 var app = express()
 require('dotenv').config()
+var moment = require("moment")
 
 var session = require('express-session')
 app.use(
@@ -20,7 +21,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.static(__dirname+"/public"))
 
 //kalytn 설정
-var Caver = require("caver-js")
+
 var CaverExtKAS = require("caver-js-ext-kas")
 var caver = new CaverExtKAS()
 
@@ -51,6 +52,14 @@ async function balanceOf(address){
     })
     return receipt
 }
+
+//klaytn contract 연결
+var Caver = require("caver-js")
+var cav = new Caver("https://api.baobab.klaytn.net:8651")
+var product_contract = require("./build/contracts/safe.json")
+var smartcontract = new cav.klay.Contract(product_contract.abi, product_contract.networks["1001"].address)
+var account = cav.klay.accounts.createWithAccountKey(process.env.address, process.env.privatekey)
+cav.klay.accounts.wallet.add(account)
 
 //mysql 세팅
 var mysql = require('mysql2')
@@ -170,6 +179,57 @@ app.get("/list", function(req, res){
     }
 })
 
+app.get("/check", function(req, res){
+    if(!req.session.login){
+        res.redirect("/")
+    }else{
+        var num = req.query._num
+        res.render("check.ejs", {
+            num : num
+        })
+    }
+})
+
+app.post("/check2", function(req, res){
+    /* contract에서 add_check()함수에 매개변수 -> 로그인을 한 사람의 지갑 주소, 차량 번호, 점검 결과, 현재 시간
+    check1,2,3 -> 점검 결과
+    로그인 한 사람의 지갑 주소 -> req.session.login.wallet
+    차량 번호 -> 페이지에서 받아올 것
+    현재 시간 -> 라이브러리? "moment" 
+    */
+    var num = req.body._num
+    var check1 = req.body.check1
+    var check2 = req.body.check2
+    var check3 = req.body.check3
+    var checks = check1 + check2 + check3
+    var checker = req.session.login.wallet
+    var check_date = moment().format("YYYY/MM/DD HH:mm:ss")
+    console.log(check1, check2, check3)
+    if(!req.session.login){
+        res.redirect("/")
+    }else{
+        smartcontract.methods
+        .add_check(checker, num, checks, check_date)
+        .send({
+            from : account.address,
+            gas : 2000000,
+        })
+        .then(function(receipt){
+            console.log(receipt)
+            res.redirect("/reward")
+        })
+    }
+})
+
+app.get("/reward", function(req, res){
+    var address = req.session.login.wallet
+    var reward = 10
+    token_trans(address, reward).then(function(receipt){
+        console.log(receipt)
+        res.redirect("/main")
+    })
+})
+
 app.get("/trans", function(req, res){
     res.render("trans.ejs")
 })
@@ -191,7 +251,74 @@ app.get("/balance", function(req, res){
     })
 })
 
+app.get("/check_list", function(req, res){
+    if(!req.session.login){
+        res.redirect("/")
+    }else{
+        connection.query(
+            `select * from car_list`,
+            function(err, result){
+                if(err){
+                    console.log(err)
+                    res.send("check_list select error")
+                }else{
+                    res.render("car_list_m.ejs", {
+                        list: result
+                    })
+                }
+            }
+        )
+    }
+})
 
+app.get("/check_info", function(req, res){
+    if(!req.session.login){
+        res.redirect("/")
+    }else{
+        var num = req.query._num
+        smartcontract.methods
+        .get_list(num)
+        .call()
+        .then(function(receipt){
+            console.log(receipt)
+            res.render("check_info.ejs", {
+                result : receipt,
+                num : num
+            })
+        })
+    }
+})
+
+app.get("/check_info2", function(req, res){
+    if(!req.session.login){
+        res.redirect("/")
+    }else{
+        var num = req.query._num
+        var check_array = new Array();
+        smartcontract.methods
+        .total_count()
+        .call()
+        .then(function(count){
+            for(var i =0; i < count;i++){
+                smartcontract.methods
+                .get_checks(i)
+                .call()
+                .then(function(receipt){
+                    if(receipt[1] == num){
+                        check_array.push(receipt)
+                    }
+                })
+            }
+        })
+        setTimeout(() => {
+            console.log(check_array)
+            res.render("check_list2.ejs", {
+                list : check_array
+            })
+        }, 2000)
+        
+    }
+})
 
 
 //api통해서 지갑을 생성

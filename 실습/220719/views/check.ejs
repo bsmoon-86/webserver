@@ -30,11 +30,6 @@
         }
       }
     </style>
-    <script>
-      function check(num){
-        location.href = '/check?_num='+num
-      }
-    </script>
 
     
     <!-- Custom styles for this template -->
@@ -57,29 +52,50 @@
 
       <h3>Example table</h3>
       <p>And don't forget about tables in these posts:</p>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>차량번호</th>
-            <th>차량연식</th>
-            <th>차량종류</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%if(list.length == 0){%>
+      <form action="/check2" method="post">
+        <div style="display: none;">
+          <input type="text" name="_num" value="<%=num%>" readonly>
+        </div>
+        <table class="table">
+          <thead>
             <tr>
-              <td colspan="3">등록된 차량이 없습니다.</td>
+              <th>점검 내용</th>
+              <th>점검 결과</th>
             </tr>
-          <%}else{
-              for(var i = 0; i < list.length; i++){%>
-                <tr onclick="check('<%=list[i].num%>')">
-                  <td><%=list[i].num%></td>
-                  <td><%=list[i].year%></td>
-                  <td><%=list[i].type%></td>
-                </tr>
-          <%}}%>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <tr>
+              <td>배터리양은 충분한가?</td>
+              <td>
+                <input type="radio" id = "1" name = 'check1' value="t" checked />
+                <label for="1">예</label>
+                <input type="radio" id = "2" name = "check1" value="f"/>
+                <label for = "2">아니오</label>
+              </td>
+            </tr>
+            <tr>
+              <td>타이어의 마모도는 괜찮은가?</td>
+              <td>
+                <input type="radio" id = "3" name = 'check2' value="t" checked />
+                <label for="3">예</label>
+                <input type="radio" id = "4" name = "check2" value="f"/>
+                <label for = "4">아니오</label>
+              </td>
+            </tr>
+            <tr>
+              <td>부동액의 상태는 괜찮은가?</td>
+              <td>
+                <input type="radio" id = "5" name = 'check3' value="t" checked />
+                <label for="5">예</label>
+                <input type="radio" id = "6" name = "check3" value="f"/>
+                <label for = "6">아니오</label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="submit" class="btn btn-lg w-100 btn-primary">제출</button>
+      </form>
+      
 
       </div>
 
